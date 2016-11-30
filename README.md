@@ -30,12 +30,14 @@
 </p>
 
 <p>
-    The game itself is 100% playable, but I would consider the following my to-do list before i considering this "ready for beta":<br/>
+    The game itself is 100% playable, but I would consider the 
+    following my to-do list before i would consider this "ready for beta":<br/>
     <ul>
         <li>Add in dice animations for rolling via matter.js</li>
         <li>Create a way to buy back in after you lose all your money</li>
-        <li>Finish security on the API</li>
+        <li>Finish security on the API - so the game experience can be <b>hacked</b></li>
         <li>a TON of refactoring to not be a quick and dirty special</li>
+        <li>adding in statistics, graphs, dataporn, etc (db was designed with stats in mind)</li>
     </ul>
 
     The following would be cool enhancements to do to the game:
