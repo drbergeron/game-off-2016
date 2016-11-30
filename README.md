@@ -30,8 +30,8 @@
 </p>
 
 <p>
-    The game itself is 100% playable, but I would consider the 
-    following my to-do list before i would consider this "ready for beta":<br/>
+    The game itself is 100% playable, but the 
+    following is my to-do list before i would consider this "ready for beta":<br/>
     <ul>
         <li>Add in dice animations for rolling via matter.js</li>
         <li>Create a way to buy back in after you lose all your money</li>
