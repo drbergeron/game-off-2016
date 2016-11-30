@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "System.Data.SqlClient": "4.1.0",
+    "Dapper": "1.50.2",
+    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+    "morelinq": "2.0.0-beta06"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Wallets]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
+    [UserId] BIGINT NOT NULL, 
+    [WalletValue] BIGINT NOT NULL DEFAULT 25, 
+    [TimesBoughtIn] INT NOT NULL DEFAULT 0
+)

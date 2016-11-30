@@ -1,0 +1,202 @@
+﻿@model ShakeotDay.ViewModels.GameHand
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+
+@{
+    ViewData["Title"] = "Game Details";
+}
+
+
+<nav>
+    <a asp-area="" asp-controller="Game" asp-action="Index">&lt; &lt; Back</a>
+</nav>
+
+
+<div id="gamedetailswrapper">
+    <h3>Game @Model.CurrentGame.Id</h3>
+    <table class="game">
+        <tr>
+            <th>Date Played</th>
+            <th>Game Closed?</th>
+            <th>Rolls Taken</th>
+            <th>Win?</th>
+        </tr>
+
+        <tr>
+            <td id="datePlayed"> </td>
+            <td id="isClosed">@(Model.CurrentGame.isClosed ? "Closed" : "In Progress")</td>
+            <td id="rollsTaken">@Model.CurrentGame.RollsTaken</td>
+            <td id="isWinning">@(Model.CurrentGame.isWinningGame == 0 ? "In Progress" : Model.CurrentGame.isWinningGame.ToString())</td>
+        </tr>
+    </table>
+
+    <div class="shakevalue">
+        This Game's Shake to get is:<br />
+        <span style="display:block;width:100%;text-align:center;font-size:20pt;">@Model.ShakeOfTheDay</span>
+
+        <div class="diceControlArea">
+            <button class="btn btn-primary btn-block @(Model.CurrentGame.isClosed ? "disabled" : "active") "
+                    id="roll_button" data-gameNo="@Model.CurrentGame.Id">
+                Roll
+            </button>
+
+        </div>
+    </div>
+
+
+
+    <div class="playpanel">
+
+        <div class="playarea">
+            <div class="diceInstructions" id="message"></div>
+            <div class="dicearea">
+                @foreach (var die in Model.CurrentHand.Hand.Select((game, i) => new { i, game }))
+                {
+                    <div class="die @(die.game.holding ? "diehold" : "")" data-held="@die.game.holding" data-handpos="@die.i"> @die.game.dieValue </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    @section Scripts {
+        <script>
+
+            var thisHandModel = @Html.Raw(JsonConvert.SerializeObject(Model.CurrentHand, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            var thisGameModel =  @Html.Raw(JsonConvert.SerializeObject(Model.CurrentGame, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+
+            var gameisclosed = @Model.CurrentGame.isClosed.ToString().ToLower();
+
+            $(".die").click(function () {
+
+                if(thisHandModel.rollNumber != 0 && !gameisclosed ){//flip held value
+                    logHand(thisHandModel);
+                    $(this).toggleClass('diehold');
+                    thisHandModel.hand[parseInt($(this).data("handpos"))].holding = $(this).data("held") == "true" ? "false" : "true";
+                    $(this).data("held", ($(this).data("held") === "true" ? "false" : "true"))
+
+                }
+            });
+
+            function clearDie() {
+                $(this).text('');
+            }
+
+            function logHand(gamehandIn){
+                console.log(gamehandIn);
+            }
+
+            $('#roll_button').click(function(){
+                updateHand();
+            });
+
+            function updateHand(){
+                var postdata = JSON.stringify(thisHandModel);
+                console.log("postdata:" + postdata);
+
+                $.ajax({
+                    url: "@Url.Content($"~/api/Game/{Model.CurrentGame.Id}/roll/{ViewData["UserId"]}")",
+                    data : postdata,
+                    contentType:"application/json; charset=utf-8",
+                    success: function( dataIn ) {
+
+                        if(dataIn.errorNumber && dataIn.errorNumber != 0){
+                            alert("Error: " + dataIn.errorType + "\n" + dataIn.errorMessage);
+                        }
+                        else{
+                            console.log(dataIn);
+                            $('.dicearea div').each(function(){
+                                $(this).text(dataIn.hand[parseInt($(this).data("handpos"))].dieValue);
+                                $(this).data("hold",dataIn.hand[parseInt($(this).data("handpos"))].holding);
+                            });
+
+                            $('#rollsTaken').text( dataIn.rollNumber);
+                            if(dataIn.rollNumber === 3){
+                                $('#isClosed').text("Closed");
+                                gameisclosed = true;
+                            }
+                            thisHandModel = dataIn;
+
+                            updateMessage();
+                            updateClosedandWinning();
+
+                            logHand(thisHandModel);
+                        }
+                    },
+                    type: "POST",
+                    error: function(jqx, stat, err){
+                        console.log("jq: " + jqx + "stat: " + stat + " err:" + err);
+                    }
+                });
+
+            }
+
+
+            function updateMessage(){
+                $('#message').text( function(){
+                    var closed = thisGameModel.isClosed;
+                    var rolls = thisGameModel.rollsTaken;
+
+                    if(closed == true){
+                        return "No more rolls available.";
+                    }else if(rolls == 0){
+                        return "Click Roll to Begin";
+                    }else
+                        return "Click Dice to hold, then roll again."
+                });
+            }
+
+            $('#datePlayed').text(createDate(@Model.CurrentGame.Year, @Model.CurrentGame.Day));
+
+            function updateClosedandWinning(){
+                $.ajax({
+                    url: "@Url.Content($"~/api/Game/{Model.CurrentGame.Id}")",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function(gameUpdate){
+                        thisGameModel = gameUpdate;
+                        updateGameLabels(thisGameModel);
+
+                        if(thisGameModel.isClosed)
+                            $('roll_button').addClass("disabled");
+                    },
+                    error: function(){
+                        $('#message').text("unable to udpate game stats - reload page to see udpates");
+                    }
+                });
+
+            }
+
+            function updateGameLabels(gameIn){
+                if(gameIn.isClosed){
+                    $('#isClosed').text("Closed");
+                }
+
+                var gamestat = $('#isWinning');
+                switch(gameIn.isWinningGame){
+                    case 1:
+                        gamestat.text("Match Three");
+                        break;
+                    case 2:
+                        gamestat.text("Match Four");
+                        break;
+                    case 3:
+                        gamestat.text("Jackpot");
+                        break;
+                    case -1:
+                        gamestat.text("Loss");
+                        break;
+                    default:
+                        gamestat.text("In Progess");
+                }
+            }
+
+            //init this
+            updateMessage();
+        </script>
+    }
+
+</div>
+<div style="width:100%;clear:both">
+    &nbsp;
+</div>
+

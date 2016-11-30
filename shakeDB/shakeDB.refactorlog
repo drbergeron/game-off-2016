@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="00135dd7-062b-4b55-96e1-8aa908e39e7f" ChangeDateTime="11/02/2016 17:03:22">
+    <Property Name="ElementName" Value="[dbo].[AspNetUsers].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AspNetUsers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FriendlyUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e8dc5e7c-624c-4e7b-882e-ced12910a924" ChangeDateTime="11/07/2016 05:16:19">
+    <Property Name="ElementName" Value="[dbo].[Games].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Games]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9292cb9b-6e56-4385-be45-3126bd4bd94d" ChangeDateTime="11/13/2016 05:45:30">
+    <Property Name="ElementName" Value="[dbo].[JwtRefresh].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[JwtRefresh]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LookupValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a5d4fb63-36f1-4535-956d-53df792f4a40" ChangeDateTime="11/13/2016 05:49:21">
+    <Property Name="ElementName" Value="[dbo].[JwtRefresh].[jwt]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[JwtRefresh]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="email" />
+  </Operation>
+</Operations>
