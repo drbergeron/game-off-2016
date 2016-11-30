@@ -58,4 +58,12 @@
         <li>beers</li>
     </ul>
     
-    </p>
+</p>
+
+<ul>Used the following libraries:
+  <li>.net Core</li>
+  <li>Dapper</li>
+  <li>jQuery</li>
+  <li>moment.js</li>
+</ul>
+
