@@ -3,7 +3,7 @@
 ![GitHub Game Off 2016 Theme is Hacking, Modding, or Augmenting](https://cloud.githubusercontent.com/assets/121322/19498019/d8827370-9543-11e6-82d8-6da822b6147b.png)
 
 <p>
-    <h4>A <b>Modern</b> twist on a classic Tavern Dice Game. </h4>
+    <h4>A <b>Mod</b>ern twist on a classic Tavern Dice Game. </h4>
     Shake of the Day is a popular bar dice game played in taverns where I grew up. 
     I wanted to bring this forward into a just-for-fun digital game and learn
     some things about the new .net Core by making an MVC site with a web API backend.<br/>
