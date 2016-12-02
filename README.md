@@ -2,6 +2,8 @@
 
 ![GitHub Game Off 2016 Theme is Hacking, Modding, or Augmenting](https://cloud.githubusercontent.com/assets/121322/19498019/d8827370-9543-11e6-82d8-6da822b6147b.png)
 
+<p>Try it out at <a href='http://shakeotdayweb.azurewebsites.net'>http://shakeotdayweb.azurewebsites.net/ </a> </p>
+
 <p>
     <h4>A <b>Mod</b>ern twist on a classic Tavern Dice Game. </h4>
     Shake of the Day is a popular bar dice game played in taverns where I grew up. 
